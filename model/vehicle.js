@@ -4,7 +4,10 @@ const mongoose=require('mongoose')
 
 // Sechema Vehicles
 const vehiclesSchema= new Schema({
-   name:String
+   make:String,
+   model:String,
+   color:String
+
 });
 // export
 
