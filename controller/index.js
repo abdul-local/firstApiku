@@ -1,15 +1,28 @@
 const express=require('express');
-const auth=require('../middleware/index');
-const Vehicle=require('../model/vehicle');
-
 const router=express.Router();
+const verifyToken=require('../middleware/index');
+const Vehicle=require('../model/vehicle');
+// const multer=require('multer');
+// const upload=multer({dest:'uploads/'})
 
+// var upload = multer({ storage: storage })
+// const router=express.Router();
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null, '/tmp/my-uploads')
+//     },
+//     filename: function (req, file, cb) {
+//       cb(null, file.fieldname + '-' + Date.now())
+//     }
+//   })
+   
 // post  data 
-router.post('/',auth,async(req,res)=>{
+router.post('/',async(req,res)=>{
     let postVehicle= new Vehicle({
         make:req.body.make,
         model:req.body.model,
-        color:req.body.model
+        color:req.body.model,
+        Image:req.body.Image,
 
     });
 
@@ -25,7 +38,7 @@ router.post('/',auth,async(req,res)=>{
 })
 
 // proses get semua data
-router.get('/',async(req,res)=>{
+router.get('/',verifyToken,async(req,res)=>{
 
     try{
         let dataget=await Vehicle.find();
